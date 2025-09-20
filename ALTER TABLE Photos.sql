@@ -1,0 +1,2 @@
+ALTER TABLE Photos
+ADD Username NVARCHAR(50);

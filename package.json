@@ -1,0 +1,17 @@
+{
+  "name": "photo-app-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/functions/*.js",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "@azure/storage-blob": "^12.17.0",
+    "bcrypt": "^6.0.0",
+    "tedious": "^18.6.1",
+    "uuid": "^10.0.0"
+  }
+}
