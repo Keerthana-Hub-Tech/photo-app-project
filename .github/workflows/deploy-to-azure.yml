@@ -58,6 +58,6 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'PhotoShare'
+          app-name: 'Photo_Share'
           slot-name: 'Production'
           package: .
