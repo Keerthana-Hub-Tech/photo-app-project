@@ -51,16 +51,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F7773B391B894E6694BA6DE214016C4F }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_C701711B30F443BFB4FDD27416AB4F2C }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_8CAC0D8980E5426FA6117B752312325A }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_63C4073FD0084CAA96086DE64D5D4323 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_30284F6A2FA44E4DBFE1705A06224182 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_981ADBF6B2674CF3AEC097EF7E40DD3A }}
 
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'PhotoShare'
-          resource-group-name: 'photo-sharing-app'
           slot-name: 'Production'
           package: .
           
