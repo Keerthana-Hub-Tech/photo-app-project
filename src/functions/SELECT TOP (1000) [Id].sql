@@ -1,0 +1,7 @@
+SELECT TOP (1000) [Id]
+      ,[PhotoURL]
+      ,[Caption]
+      ,[CreatedAt]
+      ,[Likes]
+      ,[Username]
+  FROM [dbo].[Photos]

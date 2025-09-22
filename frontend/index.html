@@ -6,70 +6,42 @@
     <title>PhotoShare</title>
     <style>
         :root {
-            --dark-text: #FFFFFF;--primary-color: #00376b; --dark-blue: #1c2938; --light-gray: #fafafa; --dark-gray: #262626; --dark-text: #262626; --light-text: #8e8e8e; --card-bg: #ffffff; --shadow-color: rgba(0,0,0,0.1); --border-color: #dbdbdb; --danger-color: #ed4956; --success-color: #1e8e3e; --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --primary-color: #00376b; --light-gray: #fafafa; --dark-gray: #262626; --dark-text: #262626; --light-text: #8e8e8e; --card-bg: #ffffff; --shadow-color: rgba(0,0,0,0.1); --border-color: #dbdbdb; --danger-color: #ed4956; --success-color: #1e8e3e; --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        html {
-    scroll-padding-top: 200px; /* Adjust this value if your header is taller */
-}
-       body { 
-    font-family: var(--font-stack); 
-    background-color: var(--light-gray); 
-    color: var(--dark-text); 
-    margin: 0;
-    display: grid; /* Use Grid for the main layout */
-    grid-template-rows: auto 1fr auto; /* Header, Main (stretches), Footer */
-    min-height: 100vh;
-}
-       header { 
-    background-color: var(--card-bg); 
-    padding: 1rem 2rem; 
-    border-bottom: 1px solid var(--border-color); 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    gap: 1.5rem; 
-    flex-wrap: wrap;
-    z-index: 1000;
-}
+        body { font-family: var(--font-stack); background-color: var(--light-gray); color: var(--dark-text); margin: 0; padding-top: 70px; /* Space for fixed header */ }
+        header { background-color: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; gap: 1.5rem; }
         header .logo { font-family: 'Grand Hotel', cursive; font-size: 1.8rem; font-weight: 400; color: var(--dark-text); }
+         .search-bar { 
+            display: flex; 
+            justify-self: center; /* Center the search bar */
+            width: 100%;
+            max-width: 400px;
+        }
+         .search-bar input { 
+            width: 100%; 
+            padding: 0.6rem 0.8rem; /* Made it a bit larger */
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            font-size: 0.9rem; 
+            background: var(--light-gray); 
+        }
         header nav { display: flex; align-items: center; gap: 1.5rem; }
-        header nav a { 
-    color: var(--dark-text); 
-    text-decoration: none; 
-    font-weight: 600; /* Bolder text */
-    cursor: pointer; 
-    font-size: 1rem; 
-    padding: 0.5rem 1rem; /* Add padding */
-    border-radius: 6px; /* Add rounded corners */
-    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out; 
-}
-header nav a:hover, header nav a.active { 
-    background-color: var(--primary-color);
-    color: white;
-}
+        header nav a { color: var(--dark-text); text-decoration: none; font-weight: 400; cursor: pointer; font-size: 1rem; }
+        .header-right { display: flex; align-items: center; gap: 1.5rem; }
         main { padding: 2rem; }
-       footer { 
-    background-color: #001f3f; /* Dark Blue */
-    color: #F0F2F5;           /* Soft Off-White text */
-    text-align: center; 
-    padding: 2rem; 
-    font-size: 0.9rem;
-    border-top: 1px solid var(--border-color); /* ADDED */
-}
+        footer { background-color: var(--light-gray); color: var(--light-text); text-align: center; padding: 2rem; font-size: 0.9rem; }
         .container { max-width: 960px; margin: auto; }
-        .auth-container { background: var(--card-bg); padding: 2.5rem; border-radius: 3px; text-align: center; margin-bottom: 1rem; border: 1px solid var(--border-color); max-width: 350px; margin: 5rem auto; }
-        .auth-container h2 { margin-top: 0; }
+        .auth-container { background: var(--card-bg); padding: 2.5rem; border-radius: 3px; text-align: center; margin-bottom: 1rem; border: 1px solid var(--border-color); max-width: 350px; margin: 5rem auto 1rem; }
+        .auth-container h2 { margin-top: 0; font-family: 'Grand Hotel', cursive; font-size: 2.5rem; font-weight: 400; }
         .auth-container .form-group { margin-bottom: 1rem; }
         .auth-container input { width: calc(100% - 1.6rem); border: 1px solid var(--border-color); background: var(--light-gray); padding: 0.8rem; border-radius: 4px; font-size: 0.9rem; }
         .auth-container button { width: 100%; }
-        .auth-container .switch-form { margin-top: 1.5rem; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 3px;}
+        .auth-container .switch-form { max-width: 350px; margin: auto; padding: 1.5rem; border: 1px solid var(--border-color); border-radius: 3px; font-size: 0.9rem; text-align: center; background: var(--card-bg);}
         .upload-section { background: var(--card-bg); padding: 1.5rem; border-radius: 3px; text-align: center; margin-bottom: 2rem; border: 1px solid var(--border-color); }
-        .search-bar { display: flex; width: 100%; margin-bottom: 2rem; }
-        .search-bar input { width: 100%; padding: 0.8rem; border: 1px solid var(--border-color); border-radius: 4px; font-size: 1rem; background: var(--card-bg); }
         h1, h2, h3 { color: var(--dark-text); font-weight: 600; }
         button { background-color: var(--primary-color); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
         button:hover { opacity: 0.8; }
-        .link-button { background: none; color: var(--primary-color); text-decoration: none; font-weight: 600; cursor: pointer; padding: 0; margin: 0; }
+        .link-button { background: none; color: var(--primary-color); text-decoration: none; font-weight: 600; cursor: pointer; padding: 0; margin: 0;}
         .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
         .gallery-item { background: var(--card-bg); border-radius: 3px; overflow: hidden; position: relative; border: 1px solid var(--border-color); }
         .gallery-item img { width: 100%; height: 290px; object-fit: cover; display: block; }
@@ -89,47 +61,99 @@ header nav a:hover, header nav a.active {
         .avatar-container { position: relative; width: 100px; height: 100px; cursor: pointer; }
         .avatar-edit-overlay { position: absolute; bottom: 0; right: 0; background: rgba(0, 0, 0, 0.7); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; opacity: 0; transition: opacity 0.2s; border: 2px solid white; }
         .avatar-container:hover .avatar-edit-overlay { opacity: 1; }
-        @media (max-width: 768px) {
+        @media (max-width: 860px) {
+            body { padding-top: 70px; }
             header { flex-wrap: wrap; justify-content: center; }
-            header nav, header .header-right { margin-top: 1rem; }
-            main { padding: 1rem; }
+            .header-right, header nav { flex-basis: 100%; display: flex; justify-content: center; margin-top: 0.5rem; }
+            .search-bar { order: 3; width: 100%; margin-top: 1rem; }
+            body { padding-top: 150px; } 
         }
-        html {
-    scroll-padding-top: 100px; /* Adjust this value to match your header's height */
+        /* New: Styles for the Create New Post Modal */
+#create-post-modal .modal-content h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: var(--dark-text);
+}
+
+#create-post-modal #file-input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--light-gray);
+    box-sizing: border-box; /* Include padding in element's total width and height */
+    font-size: 0.9rem;
+}
+
+#create-post-modal #caption-input {
+    width: calc(100% - 1.6rem); /* Adjust for padding to make it full width */
+    padding: 0.8rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    background: var(--light-gray);
+    box-sizing: border-box;
+}
+
+#create-post-modal #upload-button {
+    width: 100%;
+    padding: 0.8rem 1.2rem;
+    font-size: 1rem;
+}
+
+
+/* Adjustments for the close button to look better */
+.close-btn {
+    top: 10px;
+    right: 15px;
+    font-size: 2.2rem; /* Make it a bit larger */
+    color: var(--light-text); /* Lighter grey */
+    line-height: 1; /* Align better */
+    padding: 0 5px; /* Add some padding */
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: var(--dark-text); /* Darker on hover */
 }
     </style>
 </head>
 <body>
     
     <div id="auth-container">
-        <div id="login-form" class="auth-container">
-            <h2>PhotoShare</h2>
-            <div class="form-group">
-                <input type="text" id="login-username" placeholder="Username" autocomplete="username">
+        <div id="login-form-container">
+            <div class="auth-container">
+                <h2>PhotoShare</h2>
+                <div class="form-group">
+                    <input type="text" id="login-username" placeholder="Username" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
+                </div>
+                <button id="login-button">Log In</button>
+                <p class="auth-status"></p>
             </div>
-            <div class="form-group">
-                <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
+            <div class="auth-container switch-form">
+                <p>Don't have an account? <button id="show-register-btn" class="link-button">Sign up</button></p>
             </div>
-            <button id="login-button">Log In</button>
-            <p class="auth-status"></p>
         </div>
-        <div class="auth-container switch-form">
-            <p>Don't have an account? <button id="show-register-btn" class="link-button">Sign up</button></p>
-        </div>
-
-        <div id="register-form" class="auth-container" style="display:none;">
-            <h2>Create an account</h2>
-            <div class="form-group">
-                <input type="text" id="register-username" placeholder="Username" autocomplete="username">
+        <div id="register-form-container" style="display:none;">
+            <div class="auth-container">
+                <h2>Sign up to see photos.</h2>
+                <div class="form-group">
+                    <input type="text" id="register-username" placeholder="Username" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" id="register-password" placeholder="Password" autocomplete="new-password">
+                </div>
+                <button id="register-button">Sign Up</button>
+                <p class="auth-status"></p>
             </div>
-            <div class="form-group">
-                <input type="password" id="register-password" placeholder="Password" autocomplete="new-password">
+            <div class="auth-container switch-form">
+                 <p>Have an account? <button id="show-login-btn" class="link-button">Log in</button></p>
             </div>
-            <button id="register-button">Sign Up</button>
-            <p class="auth-status"></p>
-        </div>
-        <div class="auth-container switch-form" style="display:none;" id="register-switch">
-             <p>Have an account? <button id="show-login-btn" class="link-button">Log in</button></p>
         </div>
     </div>
     
@@ -140,15 +164,15 @@ header nav a:hover, header nav a.active {
                 <a id="feed-link">Feed</a>
                 <a id="profile-link">My Profile</a>
             </nav>
-            <div class="header-right"><span>Welcome,<span id="welcome-username"></span>!</span></div>
+            <div class="header-right"><span>Welcome, <span id="welcome-username"></span>!</span></div>
         </header>
         <main>
             <div class="container">
                 <div id="feed-view">
-                    <h2 id="gallery-title">Feed</h2>
                     <div class="search-bar">
                         <input type="text" id="search-input" placeholder="Search captions or users...">
                     </div>
+                    <h2 id="gallery-title">Feed</h2>
                     <div id="gallery-feed" class="gallery"></div>
                 </div>
                 <div id="profile-view" style="display:none;">
@@ -187,11 +211,9 @@ header nav a:hover, header nav a.active {
     </div>
 
     <script>
-        // Use relative URLs
         const registerUrl = '/api/register'; const loginUrl = '/api/login'; const uploadUrl = '/api/upload'; const getPhotosUrl = '/api/getPhotos'; const getMyPhotosUrl = '/api/getMyPhotos'; const likePhotoUrl = '/api/likePhoto'; const unlikePhotoUrl = '/api/unlikePhoto'; const deletePhotoUrl = '/api/deletePhoto'; const uploadAvatarUrl = '/api/uploadAvatar'; const getUserProfileUrl = '/api/getUserProfile'; const searchPhotosUrl = '/api/searchPhotos';
         
-        // Get all page elements
-        const authContainer = document.getElementById('auth-container'); const appContainer = document.getElementById('app-container'); const feedView = document.getElementById('feed-view'); const profileView = document.getElementById('profile-view'); const loginForm = document.getElementById('login-form'); const registerForm = document.getElementById('register-form'); const showRegisterBtn = document.getElementById('show-register-btn'); const showLoginBtn = document.getElementById('show-login-btn'); const loginButton = document.getElementById('login-button'); const registerButton = document.getElementById('register-button'); const logoutButton = document.getElementById('logout-button'); const welcomeUsername = document.getElementById('welcome-username'); const fileInput = document.getElementById('file-input'); const captionInput = document.getElementById('caption-input'); const uploadButton = document.getElementById('upload-button'); const statusDiv = document.getElementById('status'); const feedLink = document.getElementById('feed-link'); const profileLink = document.getElementById('profile-link'); const createPostBtn = document.getElementById('create-post-btn'); const createPostModal = document.getElementById('create-post-modal'); const closeModalBtn = document.getElementById('close-modal-btn'); const avatarImg = document.getElementById('avatar-img'); const avatarInput = document.getElementById('avatar-input'); const profileUsername = document.getElementById('profile-username'); const searchInput = document.getElementById('search-input'); const loginSwitch = document.querySelector('.switch-form'); const registerSwitch = document.getElementById('register-switch');
+        const authContainer = document.getElementById('auth-container'); const appContainer = document.getElementById('app-container'); const feedView = document.getElementById('feed-view'); const profileView = document.getElementById('profile-view'); const loginFormContainer = document.getElementById('login-form-container'); const registerFormContainer = document.getElementById('register-form-container'); const showRegisterBtn = document.getElementById('show-register-btn'); const showLoginBtn = document.getElementById('show-login-btn'); const loginButton = document.getElementById('login-button'); const registerButton = document.getElementById('register-button'); const logoutButton = document.getElementById('logout-button'); const welcomeUsername = document.getElementById('welcome-username'); const fileInput = document.getElementById('file-input'); const captionInput = document.getElementById('caption-input'); const uploadButton = document.getElementById('upload-button'); const statusDiv = document.getElementById('status'); const feedLink = document.getElementById('feed-link'); const profileLink = document.getElementById('profile-link'); const createPostBtn = document.getElementById('create-post-btn'); const createPostModal = document.getElementById('create-post-modal'); const closeModalBtn = document.getElementById('close-modal-btn'); const avatarImg = document.getElementById('avatar-img'); const avatarInput = document.getElementById('avatar-input'); const profileUsername = document.getElementById('profile-username'); const searchInput = document.getElementById('search-input');
         
         let likedPhotos = new Set();
         let searchTimeout;
@@ -212,12 +234,7 @@ header nav a:hover, header nav a.active {
         async function loadPhotos(filterByUser = null, customUrl = null) {
             const galleryElementId = filterByUser ? 'gallery-profile' : 'gallery-feed';
             const galleryDiv = document.getElementById(galleryElementId);
-            const galleryTitle = document.querySelector('#feed-view h2');
             let url = customUrl || (filterByUser ? `${getMyPhotosUrl}?username=${filterByUser}` : getPhotosUrl);
-            if (!customUrl) {
-                if (filterByUser) { /* Handled by H3 in profile view */ }
-                else { if (galleryTitle) galleryTitle.textContent = "Feed"; }
-            }
             try {
                 galleryDiv.innerHTML = 'Loading photos...';
                 const response = await fetch(url);
@@ -320,17 +337,36 @@ header nav a:hover, header nav a.active {
         });
         
         avatarInput.addEventListener('change', async () => {
-            const file = avatarInput.files[0]; const username = sessionStorage.getItem('username'); if (!file) return;
-            const status = document.createElement('p'); status.textContent = 'Uploading...'; const avatarSection = document.querySelector('.avatar-section div'); avatarSection.appendChild(status);
-            const formData = new FormData(); formData.append('file', file); formData.append('username', username);
-            try {
-                const response = await fetch(uploadAvatarUrl, { method: 'POST', body: formData });
-                if (!response.ok) throw new Error('Avatar upload failed.');
-                const result = await response.json();
-                avatarImg.src = result.avatarUrl + '?' + new Date().getTime();
-                status.textContent = 'Avatar updated!';
-            } catch (error) { status.textContent = error.message; } finally { setTimeout(() => status.remove(), 3000); }
-        });
+    const file = avatarInput.files[0];
+    const username = sessionStorage.getItem('username');
+    if (!file) return;
+
+    // Find the correct place to put the status message
+    const profileHeader = document.querySelector('.profile-header');
+    const status = document.createElement('p');
+    status.textContent = 'Uploading new avatar...';
+    status.style.color = 'var(--primary-color)';
+    status.style.textAlign = 'center';
+    status.style.width = '100%';
+    profileHeader.parentNode.insertBefore(status, profileHeader.nextSibling);
+
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('username', username);
+    try {
+        const response = await fetch(uploadAvatarUrl, { method: 'POST', body: formData });
+        if (!response.ok) throw new Error('Avatar upload failed.');
+        const result = await response.json();
+        avatarImg.src = result.avatarUrl + '?' + new Date().getTime();
+        status.textContent = 'Avatar updated!';
+        status.style.color = 'var(--success-color)';
+    } catch (error) {
+        status.textContent = error.message;
+        status.style.color = 'var(--danger-color)';
+    } finally {
+        setTimeout(() => status.remove(), 3000);
+    }
+});
 
         function showApp(username) {
             authContainer.style.display = 'none'; appContainer.style.display = 'block'; welcomeUsername.textContent = username; sessionStorage.setItem('username', username);
@@ -340,7 +376,7 @@ header nav a:hover, header nav a.active {
         function showAuth() {
             authContainer.style.display = 'block'; appContainer.style.display = 'none'; sessionStorage.removeItem('username');
         }
-        
+
         const performSearch = () => {
             const searchTerm = searchInput.value.trim();
             feedView.style.display = 'block';
@@ -354,47 +390,38 @@ header nav a:hover, header nav a.active {
                 loadPhotos();
             }
         };
-
-        searchInput.addEventListener('keyup', (event) => {
+        searchInput.addEventListener('input', () => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(performSearch, 500);
         });
 
-        showRegisterBtn.addEventListener('click', () => { loginForm.style.display = 'none'; registerForm.style.display = 'block'; loginSwitch.style.display = 'none'; registerSwitch.style.display = 'block';});
-        showLoginBtn.addEventListener('click', () => { registerForm.style.display = 'none'; loginForm.style.display = 'block'; registerSwitch.style.display = 'none'; loginSwitch.style.display = 'block';});
+        showRegisterBtn.addEventListener('click', () => { loginFormContainer.style.display = 'none'; registerFormContainer.style.display = 'block'; });
+        showLoginBtn.addEventListener('click', () => { registerFormContainer.style.display = 'none'; loginFormContainer.style.display = 'block'; });
         logoutButton.addEventListener('click', showAuth);
         createPostBtn.addEventListener('click', () => { createPostModal.style.display = 'flex'; });
         closeModalBtn.addEventListener('click', () => { createPostModal.style.display = 'none'; });
         createPostModal.addEventListener('click', (e) => { if (e.target === createPostModal) { createPostModal.style.display = 'none'; } });
 
         registerButton.addEventListener('click', async () => {
-            const username = document.getElementById('register-username').value; const password = document.getElementById('register-password').value; const status = registerForm.querySelector('.auth-status');
+            const usernameInput = document.getElementById('register-username'); const passwordInput = document.getElementById('register-password'); const username = usernameInput.value; const password = passwordInput.value; const status = registerFormContainer.querySelector('.auth-status');
             status.textContent = 'Registering...';
             const response = await fetch(registerUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
             if (response.ok) { 
-                status.textContent = 'Registration successful! Please login.'; 
-                status.style.color = 'green';
-                document.getElementById('register-username').value = '';
-                document.getElementById('register-password').value = '';
+                status.textContent = 'Registration successful! Please login.'; status.style.color = 'green';
+                usernameInput.value = ''; passwordInput.value = '';
             } else { 
-                status.textContent = await response.text(); 
-                status.style.color = 'red'; 
+                status.textContent = await response.text(); status.style.color = 'red'; 
             }
         });
 
         loginButton.addEventListener('click', async () => {
-            const usernameInput = document.getElementById('login-username');
-            const passwordInput = document.getElementById('login-password');
-            const username = usernameInput.value;
-            const password = passwordInput.value;
-            const status = loginForm.querySelector('.auth-status');
+            const usernameInput = document.getElementById('login-username'); const passwordInput = document.getElementById('login-password'); const username = usernameInput.value; const password = passwordInput.value; const status = loginFormContainer.querySelector('.auth-status');
             status.textContent = 'Logging in...';
             const response = await fetch(loginUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
             if (response.ok) { 
                 showApp(username);
             } else { 
-                status.textContent = await response.text(); 
-                status.style.color = 'red';
+                status.textContent = await response.text(); status.style.color = 'red';
                 passwordInput.value = '';
             }
         });
@@ -408,18 +435,6 @@ header nav a:hover, header nav a.active {
         } else {
             showAuth();
         }
-     function adjustMainPadding() {
-    const header = document.querySelector('header');
-    const main = document.querySelector('main');
-    if (header && main) {
-        const headerHeight = header.offsetHeight;
-        main.style.paddingTop = `${headerHeight + 32}px`; // 32px is our original 2rem padding
-    }
-}
-
-// Adjust padding on initial load and whenever the window is resized
-window.addEventListener('load', adjustMainPadding);
-window.addEventListener('resize', adjustMainPadding);
     </script>
 </body>
 </html>
