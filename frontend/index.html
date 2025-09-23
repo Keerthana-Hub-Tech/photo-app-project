@@ -8,23 +8,11 @@
         :root {
             --primary-color: #00376b; --light-gray: #fafafa; --dark-gray: #262626; --dark-text: #262626; --light-text: #8e8e8e; --card-bg: #ffffff; --shadow-color: rgba(0,0,0,0.1); --border-color: #dbdbdb; --danger-color: #ed4956; --success-color: #1e8e3e; --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        body { font-family: var(--font-stack); background-color: var(--light-gray); color: var(--dark-text); margin: 0; padding-top: 70px; /* Space for fixed header */ }
+        body { font-family: var(--font-stack); background-color: var(--light-gray); color: var(--dark-text); margin: 0; padding-top: 70px; }
         header { background-color: var(--card-bg); padding: 1rem 2rem; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; gap: 1.5rem; }
         header .logo { font-family: 'Grand Hotel', cursive; font-size: 1.8rem; font-weight: 400; color: var(--dark-text); }
-         .search-bar { 
-            display: flex; 
-            justify-self: center; /* Center the search bar */
-            width: 100%;
-            max-width: 400px;
-        }
-         .search-bar input { 
-            width: 100%; 
-            padding: 0.6rem 0.8rem; /* Made it a bit larger */
-            border: 1px solid var(--border-color); 
-            border-radius: 8px; 
-            font-size: 0.9rem; 
-            background: var(--light-gray); 
-        }
+        .search-bar { display: flex; justify-self: center; width: 100%; max-width: 400px; }
+        .search-bar input { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.9rem; background: var(--light-gray); }
         header nav { display: flex; align-items: center; gap: 1.5rem; }
         header nav a { color: var(--dark-text); text-decoration: none; font-weight: 400; cursor: pointer; font-size: 1rem; }
         .header-right { display: flex; align-items: center; gap: 1.5rem; }
@@ -41,6 +29,7 @@
         h1, h2, h3 { color: var(--dark-text); font-weight: 600; }
         button { background-color: var(--primary-color); color: white; border: none; padding: 0.6rem 1.2rem; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: opacity 0.2s; }
         button:hover { opacity: 0.8; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
         .link-button { background: none; color: var(--primary-color); text-decoration: none; font-weight: 600; cursor: pointer; padding: 0; margin: 0;}
         .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; }
         .gallery-item { background: var(--card-bg); border-radius: 3px; overflow: hidden; position: relative; border: 1px solid var(--border-color); }
@@ -54,70 +43,23 @@
         .gallery-item:hover .delete-btn { opacity: 1; }
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: 2000; display: none; justify-content: center; align-items: center; }
         .modal-content { background: white; padding: 2rem; border-radius: 3px; width: 90%; max-width: 500px; position: relative; border: 1px solid var(--border-color);}
-        .close-btn { position: absolute; top: 10px; right: 20px; font-size: 2rem; font-weight: bold; color: #aaa; cursor: pointer; border: none; background: none; }
+        .close-btn { position: absolute; top: 10px; right: 15px; font-size: 2.2rem; color: var(--light-text); line-height: 1; padding: 0 5px; cursor: pointer; border: none; background: none; transition: color 0.2s ease; }
+        .close-btn:hover { color: var(--dark-text); }
         .profile-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; padding-bottom: 1rem;}
         .avatar-section { display: flex; align-items: center; gap: 2rem; }
         #avatar-img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; background-color: #eee; }
         .avatar-container { position: relative; width: 100px; height: 100px; cursor: pointer; }
         .avatar-edit-overlay { position: absolute; bottom: 0; right: 0; background: rgba(0, 0, 0, 0.7); color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 1rem; cursor: pointer; opacity: 0; transition: opacity 0.2s; border: 2px solid white; }
         .avatar-container:hover .avatar-edit-overlay { opacity: 1; }
+        #create-post-modal .modal-content h3 { margin-top: 0; margin-bottom: 1.5rem; color: var(--dark-text); }
+        #create-post-modal #file-input, #create-post-modal #caption-input { width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: 1px solid var(--border-color); border-radius: 4px; background: var(--light-gray); box-sizing: border-box; font-size: 0.9rem; }
+        #create-post-modal #upload-button { width: 100%; padding: 0.8rem 1.2rem; font-size: 1rem; }
         @media (max-width: 860px) {
-            body { padding-top: 70px; }
             header { flex-wrap: wrap; justify-content: center; }
             .header-right, header nav { flex-basis: 100%; display: flex; justify-content: center; margin-top: 0.5rem; }
             .search-bar { order: 3; width: 100%; margin-top: 1rem; }
             body { padding-top: 150px; } 
         }
-        /* New: Styles for the Create New Post Modal */
-#create-post-modal .modal-content h3 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    color: var(--dark-text);
-}
-
-#create-post-modal #file-input {
-    width: 100%;
-    padding: 0.8rem;
-    margin-bottom: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    background: var(--light-gray);
-    box-sizing: border-box; /* Include padding in element's total width and height */
-    font-size: 0.9rem;
-}
-
-#create-post-modal #caption-input {
-    width: calc(100% - 1.6rem); /* Adjust for padding to make it full width */
-    padding: 0.8rem;
-    margin-bottom: 1.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    font-size: 0.9rem;
-    background: var(--light-gray);
-    box-sizing: border-box;
-}
-
-#create-post-modal #upload-button {
-    width: 100%;
-    padding: 0.8rem 1.2rem;
-    font-size: 1rem;
-}
-
-
-/* Adjustments for the close button to look better */
-.close-btn {
-    top: 10px;
-    right: 15px;
-    font-size: 2.2rem; /* Make it a bit larger */
-    color: var(--light-text); /* Lighter grey */
-    line-height: 1; /* Align better */
-    padding: 0 5px; /* Add some padding */
-    transition: color 0.2s ease;
-}
-
-.close-btn:hover {
-    color: var(--dark-text); /* Darker on hover */
-}
     </style>
 </head>
 <body>
@@ -126,12 +68,8 @@
         <div id="login-form-container">
             <div class="auth-container">
                 <h2>PhotoShare</h2>
-                <div class="form-group">
-                    <input type="text" id="login-username" placeholder="Username" autocomplete="username">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="login-password" placeholder="Password" autocomplete="current-password">
-                </div>
+                <div class="form-group"><input type="text" id="login-username" placeholder="Username" autocomplete="username"></div>
+                <div class="form-group"><input type="password" id="login-password" placeholder="Password" autocomplete="current-password"></div>
                 <button id="login-button">Log In</button>
                 <p class="auth-status"></p>
             </div>
@@ -142,17 +80,13 @@
         <div id="register-form-container" style="display:none;">
             <div class="auth-container">
                 <h2>Sign up to see photos.</h2>
-                <div class="form-group">
-                    <input type="text" id="register-username" placeholder="Username" autocomplete="username">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="register-password" placeholder="Password" autocomplete="new-password">
-                </div>
+                <div class="form-group"><input type="text" id="register-username" placeholder="Username" autocomplete="username"></div>
+                <div class="form-group"><input type="password" id="register-password" placeholder="Password" autocomplete="new-password"></div>
                 <button id="register-button">Sign Up</button>
                 <p class="auth-status"></p>
             </div>
             <div class="auth-container switch-form">
-                 <p>Have an account? <button id="show-login-btn" class="link-button">Log in</button></p>
+                <p>Have an account? <button id="show-login-btn" class="link-button">Log in</button></p>
             </div>
         </div>
     </div>
@@ -169,9 +103,7 @@
         <main>
             <div class="container">
                 <div id="feed-view">
-                    <div class="search-bar">
-                        <input type="text" id="search-input" placeholder="Search captions or users...">
-                    </div>
+                    <div class="search-bar"><input type="text" id="search-input" placeholder="Search captions or users..."></div>
                     <h2 id="gallery-title">Feed</h2>
                     <div id="gallery-feed" class="gallery"></div>
                 </div>
@@ -180,9 +112,7 @@
                         <div class="avatar-section">
                            <div class="avatar-container">
                                 <img id="avatar-img" src="https://i.imgur.com/V4RclNb.png" alt="Profile Picture">
-                                <label for="avatar-input" class="avatar-edit-overlay">
-                                    <span>&#128247;</span>
-                                </label>
+                                <label for="avatar-input" class="avatar-edit-overlay"><span>&#128247;</span></label>
                                 <input type="file" id="avatar-input" accept="image/*" style="display: none;">
                             </div>
                             <h2 id="profile-username">My Profile</h2>
@@ -211,62 +141,109 @@
     </div>
 
     <script>
-        const registerUrl = '/api/register'; const loginUrl = '/api/login'; const uploadUrl = '/api/upload'; const getPhotosUrl = '/api/getPhotos'; const getMyPhotosUrl = '/api/getMyPhotos'; const likePhotoUrl = '/api/likePhoto'; const unlikePhotoUrl = '/api/unlikePhoto'; const deletePhotoUrl = '/api/deletePhoto'; const uploadAvatarUrl = '/api/uploadAvatar'; const getUserProfileUrl = '/api/getUserProfile'; const searchPhotosUrl = '/api/searchPhotos';
+        // --- API URLs ---
+        const getLikeStatusUrl = '/api/getLikeStatus';
+        const registerUrl = '/api/register'; 
+        const loginUrl = '/api/login'; 
+        const uploadUrl = '/api/upload'; 
+        const getPhotosUrl = '/api/getPhotos'; 
+        const getMyPhotosUrl = '/api/getMyPhotos'; 
+        const likePhotoUrl = '/api/likePhoto'; 
+        const unlikePhotoUrl = '/api/unlikePhoto'; 
+        const deletePhotoUrl = '/api/deletePhoto'; 
+        const uploadAvatarUrl = '/api/uploadAvatar'; 
+        const getUserProfileUrl = '/api/getUserProfile'; 
+        const searchPhotosUrl = '/api/searchPhotos';
         
-        const authContainer = document.getElementById('auth-container'); const appContainer = document.getElementById('app-container'); const feedView = document.getElementById('feed-view'); const profileView = document.getElementById('profile-view'); const loginFormContainer = document.getElementById('login-form-container'); const registerFormContainer = document.getElementById('register-form-container'); const showRegisterBtn = document.getElementById('show-register-btn'); const showLoginBtn = document.getElementById('show-login-btn'); const loginButton = document.getElementById('login-button'); const registerButton = document.getElementById('register-button'); const logoutButton = document.getElementById('logout-button'); const welcomeUsername = document.getElementById('welcome-username'); const fileInput = document.getElementById('file-input'); const captionInput = document.getElementById('caption-input'); const uploadButton = document.getElementById('upload-button'); const statusDiv = document.getElementById('status'); const feedLink = document.getElementById('feed-link'); const profileLink = document.getElementById('profile-link'); const createPostBtn = document.getElementById('create-post-btn'); const createPostModal = document.getElementById('create-post-modal'); const closeModalBtn = document.getElementById('close-modal-btn'); const avatarImg = document.getElementById('avatar-img'); const avatarInput = document.getElementById('avatar-input'); const profileUsername = document.getElementById('profile-username'); const searchInput = document.getElementById('search-input');
+        // --- DOM Elements ---
+        const authContainer = document.getElementById('auth-container'); 
+        const appContainer = document.getElementById('app-container'); 
+        const feedView = document.getElementById('feed-view'); 
+        const profileView = document.getElementById('profile-view'); 
+        const loginFormContainer = document.getElementById('login-form-container'); 
+        const registerFormContainer = document.getElementById('register-form-container'); 
+        const showRegisterBtn = document.getElementById('show-register-btn'); 
+        const showLoginBtn = document.getElementById('show-login-btn'); 
+        const loginButton = document.getElementById('login-button'); 
+        const registerButton = document.getElementById('register-button'); 
+        const logoutButton = document.getElementById('logout-button'); 
+        const welcomeUsername = document.getElementById('welcome-username'); 
+        const fileInput = document.getElementById('file-input'); 
+        const captionInput = document.getElementById('caption-input'); 
+        const uploadButton = document.getElementById('upload-button'); 
+        const statusDiv = document.getElementById('status'); 
+        const feedLink = document.getElementById('feed-link'); 
+        const profileLink = document.getElementById('profile-link'); 
+        const createPostBtn = document.getElementById('create-post-btn'); 
+        const createPostModal = document.getElementById('create-post-modal'); 
+        const closeModalBtn = document.getElementById('close-modal-btn'); 
+        const avatarImg = document.getElementById('avatar-img'); 
+        const avatarInput = document.getElementById('avatar-input'); 
+        const profileUsername = document.getElementById('profile-username'); 
+        const searchInput = document.getElementById('search-input');
         
-        let likedPhotos = new Set();
+        // --- State ---
         let searchTimeout;
-        const getLikedPhotosKey = () => 'likedPhotos_' + sessionStorage.getItem('username');
-        const loadLikedPhotos = () => { likedPhotos = new Set(JSON.parse(localStorage.getItem(getLikedPhotosKey())) || []); };
-        const saveLikedPhotos = () => { localStorage.setItem(getLikedPhotosKey(), JSON.stringify([...likedPhotos])); };
 
-        async function loadUserProfile(username) {
-            profileUsername.textContent = `${username}'s Profile`;
-            try {
-                const response = await fetch(`${getUserProfileUrl}?username=${username}`);
-                if (!response.ok) throw new Error('Could not fetch profile.');
-                const profile = await response.json();
-                avatarImg.src = profile.AvatarURL || 'https://i.imgur.com/V4RclNb.png';
-            } catch (error) { console.error(error); avatarImg.src = 'https://i.imgur.com/V4RclNb.png'; }
-        }
+        // --- Core Functions ---
 
-        async function loadPhotos(filterByUser = null, customUrl = null) {
+        async function loadPhotosAndLikes(filterByUser = null, customUrl = null) {
             const galleryElementId = filterByUser ? 'gallery-profile' : 'gallery-feed';
             const galleryDiv = document.getElementById(galleryElementId);
-            let url = customUrl || (filterByUser ? `${getMyPhotosUrl}?username=${filterByUser}` : getPhotosUrl);
+            const currentUser = sessionStorage.getItem('username');
+            
+            let photosUrl = customUrl || (filterByUser ? `${getMyPhotosUrl}?username=${filterByUser}` : getPhotosUrl);
+
             try {
                 galleryDiv.innerHTML = 'Loading photos...';
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Failed to fetch photos.');
-                const photos = await response.json();
+
+                // STEP 1: Fetch all the photos
+                const photosResponse = await fetch(photosUrl);
+                if (!photosResponse.ok) throw new Error('Failed to fetch photos.');
+                const photos = await photosResponse.json();
+
+                // STEP 2: Fetch the like status for the current user
+                let likedPhotoIds = new Set();
+                if (currentUser) {
+                    const likeStatusResponse = await fetch(`${getLikeStatusUrl}?username=${currentUser}`);
+                    if (likeStatusResponse.ok) {
+                        const likeStatusData = await likeStatusResponse.json();
+                        likedPhotoIds = new Set(likeStatusData.likedPhotos);
+                    }
+                }
+
+                // STEP 3: Render the photos with the correct like status
                 galleryDiv.innerHTML = '';
                 if (photos.length === 0) {
                     if (customUrl) { galleryDiv.innerHTML = '<p>No posts found for that search term.</p>'; }
                     else { galleryDiv.innerHTML = filterByUser ? '<p>You have not posted any photos yet.</p>' : '<p>No photos yet. Be the first to post!</p>'; }
                     return;
                 }
-                const currentUser = sessionStorage.getItem('username');
+                
                 photos.forEach(photo => {
                     const item = document.createElement('div');
                     item.className = 'gallery-item';
+
                     if (photo.Username === currentUser) {
                         const deleteBtn = document.createElement('button');
                         deleteBtn.className = 'delete-btn';
                         deleteBtn.innerHTML = '&#128465;';
                         deleteBtn.title = 'Delete Post';
-                        deleteBtn.addEventListener('click', () => handleDeleteClick(photo.Id, currentUser, filterByUser, url));
+                        deleteBtn.addEventListener('click', () => handleDeleteClick(photo.Id, currentUser, filterByUser, photosUrl));
                         item.appendChild(deleteBtn);
                     }
+
                     const img = document.createElement('img');
                     img.src = photo.PhotoURL;
                     item.appendChild(img);
+
                     const infoDiv = document.createElement('div');
                     infoDiv.className = 'info';
+
                     if (photo.Username) {
                         const poster = document.createElement('p');
                         poster.className = 'poster';
-                        poster.textContent = photo.Username === currentUser ? 'Posted by you' : `Posted by: ${photo.Username}`;
+                        poster.textContent = `Posted by: ${photo.Username}`;
                         infoDiv.appendChild(poster);
                     }
                     if (photo.Caption) {
@@ -275,14 +252,18 @@
                         caption.textContent = photo.Caption;
                         infoDiv.appendChild(caption);
                     }
+
                     const likesDiv = document.createElement('div');
                     likesDiv.className = 'likes';
                     const likeBtn = document.createElement('button');
                     likeBtn.className = 'like-btn';
-                    likeBtn.textContent = likedPhotos.has(photo.Id) ? '❤️' : '🤍';
+                    
+                    likeBtn.textContent = likedPhotoIds.has(photo.Id) ? '❤️' : '🤍';
+                    
                     const likeCount = document.createElement('span');
                     likeCount.textContent = photo.Likes || 0;
-                    likeBtn.addEventListener('click', () => handleLikeClick(photo.Id, likeBtn, likeCount, filterByUser, url));
+                    likeBtn.addEventListener('click', () => handleLikeClick(photo.Id, filterByUser, photosUrl));
+                    
                     likesDiv.appendChild(likeBtn);
                     likesDiv.appendChild(likeCount);
                     infoDiv.appendChild(likesDiv);
@@ -295,82 +276,94 @@
             }
         }
 
-        async function handleLikeClick(photoId, likeBtn, likeCountElement, currentFilter, currentUrl) {
-            const isLiked = likedPhotos.has(photoId);
+        async function handleLikeClick(photoId, currentFilter, currentUrl) {
+            const username = sessionStorage.getItem('username');
+            if (!username) {
+                alert('You must be logged in to like photos.');
+                return;
+            }
+            
+            // Disable the button to prevent multiple clicks
+            const allLikeButtons = document.querySelectorAll('.like-btn');
+            allLikeButtons.forEach(btn => btn.disabled = true);
+
+            const likeStatusResponse = await fetch(`${getLikeStatusUrl}?username=${username}`);
+            const likeStatusData = await likeStatusResponse.json();
+            const isLiked = new Set(likeStatusData.likedPhotos).has(photoId);
+
             const url = isLiked ? unlikePhotoUrl : likePhotoUrl;
-            likeBtn.disabled = true;
-            if (isLiked) { likedPhotos.delete(photoId); } 
-            else { likedPhotos.add(photoId); }
-            saveLikedPhotos();
+
             try {
-                const response = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: photoId }) });
-                if (!response.ok) throw new Error('API call failed.');
-                loadPhotos(currentFilter, currentUrl);
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: photoId, username: username })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+                
+                loadPhotosAndLikes(currentFilter, currentUrl);
+
             } catch (error) {
-                console.error(error);
-                if (isLiked) { likedPhotos.add(photoId); } else { likedPhotos.delete(photoId); }
-                saveLikedPhotos();
-                loadPhotos(currentFilter, currentUrl);
+                console.error('Failed to update like status:', error);
+                alert('Could not update like status. Please try again.');
+                // Re-enable buttons on failure
+                allLikeButtons.forEach(btn => btn.disabled = false);
             }
         }
-        
+
         async function handleDeleteClick(photoId, username, currentFilter, currentUrl) {
             if (!confirm('Are you sure you want to delete this post?')) { return; }
             try {
                 const response = await fetch(deletePhotoUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id: photoId, username: username }) });
                 if (!response.ok) { throw new Error(await response.text()); }
-                loadPhotos(currentFilter, currentUrl);
+                loadPhotosAndLikes(currentFilter, currentUrl);
             } catch (error) { alert(`Error deleting post: ${error.message}`); }
+        }
+
+        async function loadUserProfile(username) {
+            profileUsername.textContent = `${username}'s Profile`;
+            try {
+                const response = await fetch(`${getUserProfileUrl}?username=${username}`);
+                if (!response.ok) throw new Error('Could not fetch profile.');
+                const profile = await response.json();
+                avatarImg.src = profile.AvatarURL || 'https://i.imgur.com/V4RclNb.png';
+            } catch (error) { console.error(error); avatarImg.src = 'https://i.imgur.com/V4RclNb.png'; }
         }
 
         uploadButton.addEventListener('click', async () => {
             const file = fileInput.files[0]; const caption = captionInput.value; const username = sessionStorage.getItem('username'); if (!file || !username) { statusDiv.textContent = 'Please select a file.'; return; }
             const formData = new FormData(); formData.append('file', file); formData.append('caption', caption); formData.append('username', username);
+            uploadButton.disabled = true;
             statusDiv.textContent = 'Uploading...';
             try {
                 const response = await fetch(uploadUrl, { method: 'POST', body: formData });
                 if (!response.ok) throw new Error(await response.text());
                 statusDiv.textContent = 'Post successful!';
                 setTimeout(() => { createPostModal.style.display = 'none'; statusDiv.textContent = ''; fileInput.value = ''; captionInput.value = ''; }, 1500);
-                loadPhotos(username);
-            } catch (error) { statusDiv.textContent = `Upload failed: ${error.message}`; }
+                loadPhotosAndLikes(username);
+            } catch (error) { statusDiv.textContent = `Upload failed: ${error.message}`; } finally { uploadButton.disabled = false; }
         });
-        
+
         avatarInput.addEventListener('change', async () => {
-    const file = avatarInput.files[0];
-    const username = sessionStorage.getItem('username');
-    if (!file) return;
-
-    // Find the correct place to put the status message
-    const profileHeader = document.querySelector('.profile-header');
-    const status = document.createElement('p');
-    status.textContent = 'Uploading new avatar...';
-    status.style.color = 'var(--primary-color)';
-    status.style.textAlign = 'center';
-    status.style.width = '100%';
-    profileHeader.parentNode.insertBefore(status, profileHeader.nextSibling);
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('username', username);
-    try {
-        const response = await fetch(uploadAvatarUrl, { method: 'POST', body: formData });
-        if (!response.ok) throw new Error('Avatar upload failed.');
-        const result = await response.json();
-        avatarImg.src = result.avatarUrl + '?' + new Date().getTime();
-        status.textContent = 'Avatar updated!';
-        status.style.color = 'var(--success-color)';
-    } catch (error) {
-        status.textContent = error.message;
-        status.style.color = 'var(--danger-color)';
-    } finally {
-        setTimeout(() => status.remove(), 3000);
-    }
-});
+            const file = avatarInput.files[0]; const username = sessionStorage.getItem('username'); if (!file) return;
+            const profileHeader = document.querySelector('.profile-header'); const status = document.createElement('p'); status.textContent = 'Uploading new avatar...'; status.style.color = 'var(--primary-color)'; status.style.textAlign = 'center'; status.style.width = '100%'; profileHeader.parentNode.insertBefore(status, profileHeader.nextSibling);
+            const formData = new FormData(); formData.append('file', file); formData.append('username', username);
+            try {
+                const response = await fetch(uploadAvatarUrl, { method: 'POST', body: formData });
+                if (!response.ok) throw new Error('Avatar upload failed.');
+                const result = await response.json();
+                avatarImg.src = result.avatarUrl + '?' + new Date().getTime();
+                status.textContent = 'Avatar updated!'; status.style.color = 'var(--success-color)';
+            } catch (error) { status.textContent = error.message; status.style.color = 'var(--danger-color)'; } finally { setTimeout(() => status.remove(), 3000); }
+        });
 
         function showApp(username) {
             authContainer.style.display = 'none'; appContainer.style.display = 'block'; welcomeUsername.textContent = username; sessionStorage.setItem('username', username);
-            loadLikedPhotos(); feedView.style.display = 'block'; profileView.style.display = 'none'; loadPhotos();
+            feedView.style.display = 'block'; profileView.style.display = 'none';
+            loadPhotosAndLikes();
         }
 
         function showAuth() {
@@ -379,21 +372,17 @@
 
         const performSearch = () => {
             const searchTerm = searchInput.value.trim();
-            feedView.style.display = 'block';
-            profileView.style.display = 'none';
+            feedView.style.display = 'block'; profileView.style.display = 'none';
             const galleryTitle = document.querySelector('#feed-view h2');
             if (searchTerm) {
                 galleryTitle.textContent = `Search Results for "${searchTerm}"`;
-                loadPhotos(null, `${searchPhotosUrl}?term=${searchTerm}`);
+                loadPhotosAndLikes(null, `${searchPhotosUrl}?term=${searchTerm}`);
             } else {
                 galleryTitle.textContent = 'Feed';
-                loadPhotos();
+                loadPhotosAndLikes();
             }
         };
-        searchInput.addEventListener('input', () => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(performSearch, 500);
-        });
+        searchInput.addEventListener('input', () => { clearTimeout(searchTimeout); searchTimeout = setTimeout(performSearch, 500); });
 
         showRegisterBtn.addEventListener('click', () => { loginFormContainer.style.display = 'none'; registerFormContainer.style.display = 'block'; });
         showLoginBtn.addEventListener('click', () => { registerFormContainer.style.display = 'none'; loginFormContainer.style.display = 'block'; });
@@ -405,30 +394,29 @@
         registerButton.addEventListener('click', async () => {
             const usernameInput = document.getElementById('register-username'); const passwordInput = document.getElementById('register-password'); const username = usernameInput.value; const password = passwordInput.value; const status = registerFormContainer.querySelector('.auth-status');
             status.textContent = 'Registering...';
-            const response = await fetch(registerUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
-            if (response.ok) { 
-                status.textContent = 'Registration successful! Please login.'; status.style.color = 'green';
-                usernameInput.value = ''; passwordInput.value = '';
-            } else { 
-                status.textContent = await response.text(); status.style.color = 'red'; 
-            }
+            registerButton.disabled = true;
+            try {
+                const response = await fetch(registerUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
+                if (response.ok) { status.textContent = 'Registration successful! Please login.'; status.style.color = 'green'; usernameInput.value = ''; passwordInput.value = ''; } 
+                else { status.textContent = await response.text(); status.style.color = 'red'; }
+            } catch (error) { status.textContent = 'An error occurred.'; status.style.color = 'red'; } finally { registerButton.disabled = false; }
         });
 
         loginButton.addEventListener('click', async () => {
             const usernameInput = document.getElementById('login-username'); const passwordInput = document.getElementById('login-password'); const username = usernameInput.value; const password = passwordInput.value; const status = loginFormContainer.querySelector('.auth-status');
             status.textContent = 'Logging in...';
-            const response = await fetch(loginUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
-            if (response.ok) { 
-                showApp(username);
-            } else { 
-                status.textContent = await response.text(); status.style.color = 'red';
-                passwordInput.value = '';
-            }
+            loginButton.disabled = true;
+            try {
+                const response = await fetch(loginUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ username, password }) });
+                if (response.ok) { showApp(username); } 
+                else { status.textContent = await response.text(); status.style.color = 'red'; passwordInput.value = ''; }
+            } catch (error) { status.textContent = 'An error occurred.'; status.style.color = 'red'; } finally { loginButton.disabled = false; }
         });
         
-        feedLink.addEventListener('click', (e) => { e.preventDefault(); searchInput.value = ''; feedView.style.display = 'block'; profileView.style.display = 'none'; loadPhotos(); });
-        profileLink.addEventListener('click', (e) => { e.preventDefault(); searchInput.value = ''; feedView.style.display = 'none'; profileView.style.display = 'block'; const currentUser = sessionStorage.getItem('username'); loadUserProfile(currentUser); loadPhotos(currentUser); });
+        feedLink.addEventListener('click', (e) => { e.preventDefault(); searchInput.value = ''; document.querySelector('#feed-view h2').textContent = 'Feed'; feedView.style.display = 'block'; profileView.style.display = 'none'; loadPhotosAndLikes(); });
+        profileLink.addEventListener('click', (e) => { e.preventDefault(); searchInput.value = ''; feedView.style.display = 'none'; profileView.style.display = 'block'; const currentUser = sessionStorage.getItem('username'); loadUserProfile(currentUser); loadPhotosAndLikes(currentUser); });
         
+        // Initial Load
         const loggedInUser = sessionStorage.getItem('username');
         if (loggedInUser) {
             showApp(loggedInUser);

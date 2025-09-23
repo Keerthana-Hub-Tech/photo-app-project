@@ -1,0 +1,8 @@
+CREATE TABLE PhotoLikes (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    PhotoId INT NOT NULL,
+    Username NVARCHAR(50) NOT NULL,
+    CONSTRAINT FK_PhotoLikes_Photos FOREIGN KEY (PhotoId) REFERENCES Photos(Id) ON DELETE CASCADE,
+    CONSTRAINT FK_PhotoLikes_Users FOREIGN KEY (Username) REFERENCES Users(Username) ON DELETE CASCADE,
+    CONSTRAINT UQ_User_Photo_Like UNIQUE (Username, PhotoId)
+);

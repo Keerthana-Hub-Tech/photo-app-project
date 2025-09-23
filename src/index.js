@@ -287,12 +287,19 @@ app.http('likePhoto', {
     authLevel: 'anonymous',
     handler: async (request, context) => {
         if (request.method === 'OPTIONS') { return { status: 204, headers: corsHeaders }; }
+
         let connection;
         try {
-            const { id } = await request.json();
-            if (!id) { return { status: 400, headers: corsHeaders, body: 'Please provide a photo ID.' }; }
+            // Your frontend now needs to send both 'id' and 'username'
+            const { id, username } = await request.json();
+            if (!id || !username) {
+                return { status: 400, headers: corsHeaders, body: 'Please provide a photo ID and username.' };
+            }
+
             connection = new Connection(dbConfig);
             await new Promise((resolve, reject) => connection.connect(err => err ? reject(err) : resolve()));
+
+            // --- First, update the likes count (your original code) ---
             await new Promise((resolve, reject) => {
                 const sql = 'UPDATE Photos SET Likes = Likes + 1 WHERE Id = @Id';
                 const req = new Request(sql, (err, rowCount) => {
@@ -303,6 +310,24 @@ app.http('likePhoto', {
                 req.addParameter('Id', TYPES.Int, id);
                 connection.execSql(req);
             });
+
+            // --- NEW CODE: Now, record which user liked the photo ---
+            await new Promise((resolve, reject) => {
+                const sql = 'INSERT INTO PhotoLikes (PhotoId, Username) VALUES (@PhotoId, @Username)';
+                const req = new Request(sql, (err) => {
+                    // Ignore unique key errors, which happen if the user clicks like twice quickly
+                    if (err && !err.message.includes('Violation of UNIQUE KEY constraint')) {
+                        reject(err);
+                    } else {
+                        resolve();
+                    }
+                });
+                req.addParameter('PhotoId', TYPES.Int, id);
+                req.addParameter('Username', TYPES.NVarChar, username);
+                connection.execSql(req);
+            });
+            // --- END OF NEW CODE ---
+
             return { status: 200, headers: corsHeaders, jsonBody: { success: true } };
         } catch (error) {
             context.log(`Error liking photo: ${error.message}`);
@@ -321,12 +346,19 @@ app.http('unlikePhoto', {
     authLevel: 'anonymous',
     handler: async (request, context) => {
         if (request.method === 'OPTIONS') { return { status: 204, headers: corsHeaders }; }
+
         let connection;
         try {
-            const { id } = await request.json();
-            if (!id) { return { status: 400, headers: corsHeaders, body: 'Please provide a photo ID.' }; }
+            // Your frontend now needs to send both 'id' and 'username'
+            const { id, username } = await request.json();
+            if (!id || !username) {
+                return { status: 400, headers: corsHeaders, body: 'Please provide a photo ID and username.' };
+            }
+
             connection = new Connection(dbConfig);
             await new Promise((resolve, reject) => connection.connect(err => err ? reject(err) : resolve()));
+
+            // --- First, update the likes count ---
             const likesResult = await new Promise((resolve, reject) => {
                 const sql = 'UPDATE Photos SET Likes = CASE WHEN Likes > 0 THEN Likes - 1 ELSE 0 END OUTPUT INSERTED.Likes WHERE Id = @Id';
                 const req = new Request(sql, (err, rowCount) => {
@@ -340,12 +372,26 @@ app.http('unlikePhoto', {
                 req.on('error', reject);
                 connection.execSql(req);
             });
+
+            // --- NEW CODE: Now, remove the record of the user's like ---
+            await new Promise((resolve, reject) => {
+                const sql = 'DELETE FROM PhotoLikes WHERE PhotoId = @PhotoId AND Username = @Username';
+                const req = new Request(sql, (err) => {
+                    if (err) { reject(err); }
+                    else { resolve(); }
+                });
+                req.addParameter('PhotoId', TYPES.Int, id);
+                req.addParameter('Username', TYPES.NVarChar, username);
+                connection.execSql(req);
+            });
+            // --- END OF NEW CODE ---
+
             return { status: 200, headers: corsHeaders, jsonBody: { message: 'Unlike registered successfully!', newLikes: likesResult } };
         } catch (error) {
             context.log(`Error unliking photo: ${error.message}`);
             return { status: 500, headers: corsHeaders, body: `Server error: ${error.message}` };
         } finally {
-            if (connection && !connection.closed) { connection.close(); }
+             if (connection && !connection.closed) { connection.close(); }
         }
     }
 });
