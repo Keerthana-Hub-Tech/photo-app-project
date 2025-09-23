@@ -73,5 +73,6 @@ jobs:
         with:
           app-name: 'PhotoShareApp'
           slot-name: 'Production'
-          package: 'src'
+          package: '.'
+
 
