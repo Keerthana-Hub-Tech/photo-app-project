@@ -277,42 +277,49 @@
         }
 
         async function handleLikeClick(photoId, currentFilter, currentUrl) {
-            const username = sessionStorage.getItem('username');
-            if (!username) {
-                alert('You must be logged in to like photos.');
-                return;
-            }
-            
-            // Disable the button to prevent multiple clicks
-            const allLikeButtons = document.querySelectorAll('.like-btn');
-            allLikeButtons.forEach(btn => btn.disabled = true);
+    const username = sessionStorage.getItem('username');
+    if (!username) {
+        alert('You must be logged in to like photos.');
+        return;
+    }
+    
+    // Disable the button to prevent multiple clicks
+    const allLikeButtons = document.querySelectorAll('.like-btn');
+    allLikeButtons.forEach(btn => btn.disabled = true);
 
-            const likeStatusResponse = await fetch(`${getLikeStatusUrl}?username=${username}`);
-            const likeStatusData = await likeStatusResponse.json();
-            const isLiked = new Set(likeStatusData.likedPhotos).has(photoId);
+    try {
+        // First, we need to know the current state to call the right API
+        const likeStatusResponse = await fetch(`${getLikeStatusUrl}?username=${username}`);
+        if (!likeStatusResponse.ok) throw new Error('Could not get current like status.');
+        
+        const likeStatusData = await likeStatusResponse.json();
+        const isLiked = new Set(likeStatusData.likedPhotos).has(photoId);
 
-            const url = isLiked ? unlikePhotoUrl : likePhotoUrl;
+        const url = isLiked ? unlikePhotoUrl : likePhotoUrl;
 
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: photoId, username: username })
-                });
+        // Now, call the like or unlike API
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: photoId, username: username })
+        });
 
-                if (!response.ok) {
-                    throw new Error(`API call failed with status: ${response.status}`);
-                }
-                
-                loadPhotosAndLikes(currentFilter, currentUrl);
-
-            } catch (error) {
-                console.error('Failed to update like status:', error);
-                alert('Could not update like status. Please try again.');
-                // Re-enable buttons on failure
-                allLikeButtons.forEach(btn => btn.disabled = false);
-            }
+        if (!response.ok) {
+            // If the API fails, get the text error message from the server
+            const errorText = await response.text();
+            throw new Error(`API call failed: ${errorText}`);
         }
+        
+        // On success, just reload the photos. No need to parse a JSON response here.
+        loadPhotosAndLikes(currentFilter, currentUrl);
+
+    } catch (error) {
+        console.error('Failed to update like status:', error);
+        alert('Could not update like status. Please try again.');
+        // Re-enable buttons on failure
+        allLikeButtons.forEach(btn => btn.disabled = false);
+    }
+}
 
         async function handleDeleteClick(photoId, username, currentFilter, currentUrl) {
             if (!confirm('Are you sure you want to delete this post?')) { return; }

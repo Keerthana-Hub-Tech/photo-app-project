@@ -26,7 +26,9 @@ const dbConfig = {
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type'
+    'Access-Control-Allow-Headers': 'Content-Type',
+    'X-Content-Type-Options': 'nosniff'
+    
 };
 
 //================================================================================
@@ -332,6 +334,54 @@ app.http('likePhoto', {
         } catch (error) {
             context.log(`Error liking photo: ${error.message}`);
             return { status: 500, headers: corsHeaders, body: `Server error: ${error.message}` };
+        } finally {
+            if (connection && !connection.closed) { connection.close(); }
+        }
+    }
+});
+//================================================================================
+//                      FUNCTION: getLikeStatus
+//================================================================================
+app.http('getLikeStatus', {
+    methods: ['GET', 'OPTIONS'],
+    authLevel: 'anonymous',
+    handler: async (request, context) => {
+        if (request.method === 'OPTIONS') { return { status: 204, headers: corsHeaders }; }
+
+        const username = request.query.get('username');
+        if (!username) {
+            return { status: 400, headers: corsHeaders, body: 'Please provide a username.' };
+        }
+
+        let connection;
+        const likedPhotoIds = [];
+        try {
+            connection = new Connection(dbConfig);
+            await new Promise((resolve, reject) => connection.connect(err => err ? reject(err) : resolve()));
+            
+            await new Promise((resolve, reject) => {
+                const sql = 'SELECT PhotoId FROM PhotoLikes WHERE Username = @Username';
+                const req = new Request(sql, (err) => {
+                    if (err) { reject(err); } 
+                    else { resolve(); }
+                });
+
+                req.addParameter('Username', TYPES.NVarChar, username);
+                
+                req.on('row', (columns) => {
+                    likedPhotoIds.push(columns[0].value);
+                });
+                
+                req.on('requestCompleted', () => resolve());
+                req.on('error', reject);
+
+                connection.execSql(req);
+            });
+            
+            return { status: 200, headers: corsHeaders, jsonBody: { likedPhotos: likedPhotoIds } };
+        } catch (error) {
+            context.log(`Error getting like status: ${error.message}`);
+            return { status: 500, headers: corsHeaders, body: 'Error getting like status.' };
         } finally {
             if (connection && !connection.closed) { connection.close(); }
         }
