@@ -31,6 +31,3 @@ Users, Photos, PhotoLikes
 
 ## 📌 Future Enhancements
 Comments, follow system, notifications
-
-## 📄 License
-MIT
